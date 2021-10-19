@@ -8,6 +8,7 @@ import {
   MainScreen,
   NewEntryMenuScreen,
   FeedEntryScreen,
+  NapEntryScreen,
 } from "./Screens/Screens.Module";
 
 var display = [{ type: "Dummy", id: "asdf" }];
@@ -88,6 +89,7 @@ export default function App() {
         <Stack.Screen name="Main" component={MainScreen} />
         <Stack.Screen name="NewEntryMenu" component={NewEntryMenuScreen} />
         <Stack.Screen name="FeedEntry" component={FeedEntryScreen} />
+        <Stack.Screen name="NapEntry" component={NapEntryScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
