@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   View,
-  Platform,
   TextInput,
   Text,
   TouchableWithoutFeedback,
@@ -12,11 +11,7 @@ import ButtonLink from "../../components/ButtonLink";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../../Base.StyleSheet";
 import moment from "moment";
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from "react-native-simple-radio-button";
+import RadioForm from "react-native-simple-radio-button";
 
 var radio_props = [
   { label: "Formula", value: "Formula" },
@@ -26,17 +21,14 @@ var radio_props = [
 
 var submitEvent = function (eventData, navigate) {
   var apiURL = "http://localhost:8000/api/feed";
-  console.log(JSON.stringify(eventData));
   try {
     fetch(apiURL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(eventData),
-    })
-      // .then((response) => response.json())
-      .then((data) => {
-        navigate("Main");
-      });
+    }).then((data) => {
+      navigate("Main");
+    });
   } catch (error) {
     console.log(error.message);
   }
@@ -90,7 +82,6 @@ const FeedEntryScreen = (props) => {
         >
           <Text>Submit</Text>
         </TouchableOpacity>
-
         <ButtonLink text="Nothing yet" />
       </View>
     </TouchableWithoutFeedback>

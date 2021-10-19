@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import moment from "moment";
 import ButtonLink from "./components/ButtonLink";
@@ -10,35 +10,52 @@ import {
   FeedEntryScreen,
 } from "./Screens/Screens.Module";
 
-var display = [];
+var display = [{ type: "Dummy", id: "asdf" }];
 
 const Stack = createStackNavigator();
 
-// var getData = ({ setLoaded }) => {
+// var getData = ({ setDisplay, setLoaded }) => {
 //   var apiURL = "http://localhost:8000/api/feed";
-//   console.log(moment());
 //   fetch(apiURL, { method: "GET" })
 //     .then((response) => response.json())
 //     .then((data) => {
-//       console.log(moment(data[0].time).format("dd-m-yy"));
-//       console.log(moment());
-
+//       console.log(data);
+//       setLoaded(true);
 //       display = [];
 //       display = data;
-//       setLoaded(true);
+
+//       // setDisplay(data);
 //     });
 // };
 
 export default function App() {
   //   var apiURL = "http://localhost:8000/api/feed";
-  //   const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  // const [display, setDisplay] = useState([]);
   //   const [state, setState] = useState("start");
 
   //   console.log("loaded", loaded);
 
-  //   // if (!loaded) {
-  //   //   getData({ setLoaded });
-  //   // }
+  // if (!loaded) {
+  //   getData({ setDisplay, setLoaded });
+  // }
+
+  useEffect(() => {
+    var apiURL = "http://localhost:8000/api/feed";
+    if (!loaded) {
+      fetch(apiURL, { method: "GET" })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("data");
+
+          // display = [];
+          // display = display.concat(data);
+          console.log(display);
+          setLoaded(true);
+          // setDisplay(data);
+        });
+    }
+  });
 
   //   getData({ setLoaded });
 
@@ -57,8 +74,12 @@ export default function App() {
   //     alignItems: "center",
   //     justifyContent: "center",
   //   },
+  // console.log("Rendered");
   return (
     <NavigationContainer>
+      {/* {display.map((item) => {
+        return <Text key={item.id + "testing"}>FOO {item.type}</Text>;
+      })} */}
       <Stack.Navigator
         initialRouteName="Main"
         options={{ title: "Overview" }}
