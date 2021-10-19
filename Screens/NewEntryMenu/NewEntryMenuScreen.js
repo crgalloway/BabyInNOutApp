@@ -13,7 +13,7 @@ const NewEntryMenuScreen = (props) => {
     <View style={styles.container}>
       <ButtonLink text="New Feeding" target={"FeedEntry"} />
       <ButtonLink text="New Diaper" />
-      <ButtonLink text="New Sleep" />
+      <ButtonLink text="New Sleep" target={"NapEntry"} />
     </View>
   );
 };
