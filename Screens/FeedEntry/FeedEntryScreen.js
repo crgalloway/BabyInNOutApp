@@ -6,33 +6,14 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import ButtonLink from "../../components/ButtonLink";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../../Base.StyleSheet";
 import moment from "moment";
 import RadioForm from "react-native-simple-radio-button";
-
-var radio_props = [
-  { label: "Formula", value: "Formula" },
-  { label: "Breast Milk", value: "Breast Milk" },
-  { label: "Other", value: "Other" },
-];
-
-var submitEvent = function (eventData, navigate) {
-  var apiURL = "http://localhost:8000/api/feed";
-  try {
-    fetch(apiURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(eventData),
-    }).then((data) => {
-      navigate("Main");
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 var newFeedEvent = {
   time: moment(),
@@ -42,19 +23,61 @@ var newFeedEvent = {
 };
 
 const FeedEntryScreen = (props) => {
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const navigate = useNavigation().navigate;
+
+  var radio_props = [
+    { label: "Formula", value: "Formula" },
+    { label: "Milk", value: "Milk" },
+    { label: "Other", value: "Other" },
+  ];
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    newFeedEvent.time = moment(date);
+    hideDatePicker();
+  };
+
+  const submitEvent = function (eventData) {
+    var apiURL = "http://localhost:8000/api/feed";
+    try {
+      fetch(apiURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(eventData),
+      }).then((data) => {
+        navigate("Main");
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
         <Text>Baby was fed at or around:</Text>
-        <Text>{newFeedEvent.time.format("h:mm a").toString()}</Text>
+        <Text>{newFeedEvent.time.format("M/DD h:mm a").toString()}</Text>
+        <Button title="Show Date Picker" onPress={showDatePicker} />
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="datetime"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
         <TextInput
           placeholder="Amount in oz."
           style={styles.TextInputStyle}
           keyboardType={"numeric"}
           onChangeText={(value) => {
-            newFeedEvent.quantity = parseInt(value, 10);
+            newFeedEvent.quantity = parseFloat(value);
           }}
         />
         <Text>oz.</Text>
@@ -63,7 +86,6 @@ const FeedEntryScreen = (props) => {
           initial={0}
           onPress={(value) => {
             newFeedEvent.type = value;
-            console.log(newFeedEvent);
           }}
         />
         <TextInput
@@ -76,8 +98,7 @@ const FeedEntryScreen = (props) => {
         />
         <TouchableOpacity
           onPress={(value) => {
-            console.log(newFeedEvent);
-            submitEvent(newFeedEvent, navigate);
+            submitEvent(newFeedEvent);
           }}
         >
           <Text>Submit</Text>
