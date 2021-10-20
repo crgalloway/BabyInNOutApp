@@ -9,6 +9,7 @@ import {
   NewEntryMenuScreen,
   FeedEntryScreen,
   NapEntryScreen,
+  DiaperEntryScreen,
 } from "./Screens/Screens.Module";
 
 var display = [{ type: "Dummy", id: "asdf" }];
@@ -90,6 +91,7 @@ export default function App() {
         <Stack.Screen name="NewEntryMenu" component={NewEntryMenuScreen} />
         <Stack.Screen name="FeedEntry" component={FeedEntryScreen} />
         <Stack.Screen name="NapEntry" component={NapEntryScreen} />
+        <Stack.Screen name="DiaperEntry" component={DiaperEntryScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
