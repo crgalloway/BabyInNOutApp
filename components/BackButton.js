@@ -3,19 +3,16 @@ import { Text, View, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions, TouchableHighlight } from "react-native";
 
-const ButtonLink = ({ text, target, style, param }) => {
+const BackButton = ({ target, style, param }) => {
   const navigation = useNavigation();
 
   const styles = {
     button: {
-      borderRadius:
-        Math.round(
-          Dimensions.get("window").width + Dimensions.get("window").height
-        ) / 2,
-      width: Dimensions.get("window").width * 0.5,
-      height: Dimensions.get("window").width * 0.5,
-      margin: Dimensions.get("window").height / 30,
-      backgroundColor: "#f00",
+      borderRadius: 5,
+      width: Dimensions.get("window").width * 0.1,
+      height: Dimensions.get("window").width * 0.1,
+      margin: Dimensions.get("window").height / 100,
+      backgroundColor: "#f0f",
       justifyContent: "center",
       alignItems: "center",
     },
@@ -32,10 +29,10 @@ const ButtonLink = ({ text, target, style, param }) => {
           navigation.navigate(target, param);
         }}
       >
-        <Text style={{}}>{text}</Text>
+        <Text style={{}}>Back</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default ButtonLink;
+export default BackButton;
