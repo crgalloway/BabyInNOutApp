@@ -8,14 +8,14 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import ButtonLink from "../../components/ButtonLink";
+import BackButton from "../../components/BackButton";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../../Base.StyleSheet";
 import moment from "moment";
 import RadioForm from "react-native-simple-radio-button";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-var newFeedEvent = {
+var newEvent = {
   time: moment(),
   quantity: 0,
   type: "formula",
@@ -41,7 +41,7 @@ const FeedEntryScreen = (props) => {
   };
 
   const handleConfirm = (date) => {
-    newFeedEvent.time = moment(date);
+    newEvent.time = moment(date);
     hideDatePicker();
   };
 
@@ -63,6 +63,7 @@ const FeedEntryScreen = (props) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
+        <BackButton target="NewEntryMenu" />
         <Text>Baby was fed at or around:</Text>
         <Text>{newFeedEvent.time.format("M/DD h:mm a").toString()}</Text>
         <Button title="Show Date Picker" onPress={showDatePicker} />
@@ -77,7 +78,7 @@ const FeedEntryScreen = (props) => {
           style={styles.TextInputStyle}
           keyboardType={"numeric"}
           onChangeText={(value) => {
-            newFeedEvent.quantity = parseFloat(value);
+            newEvent.quantity = parseFloat(value);
           }}
         />
         <Text>oz.</Text>
@@ -85,7 +86,7 @@ const FeedEntryScreen = (props) => {
           radio_props={radio_props}
           initial={0}
           onPress={(value) => {
-            newFeedEvent.type = value;
+            newEvent.type = value;
           }}
         />
         <TextInput
@@ -93,7 +94,7 @@ const FeedEntryScreen = (props) => {
           style={styles.TextInputStyle}
           keyboardType={"default"}
           onChangeText={(value) => {
-            newFeedEvent.comment = value;
+            newEvent.comment = value;
           }}
         />
         <TouchableOpacity
@@ -103,7 +104,6 @@ const FeedEntryScreen = (props) => {
         >
           <Text>Submit</Text>
         </TouchableOpacity>
-        <ButtonLink text="Nothing yet" />
       </View>
     </TouchableWithoutFeedback>
   );

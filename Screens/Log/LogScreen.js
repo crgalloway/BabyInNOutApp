@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import ButtonLink from "../../components/ButtonLink";
+import BackButton from "../../components/BackButton";
 import styles from "../../Base.StyleSheet";
 import moment from "moment";
 
@@ -23,6 +24,7 @@ const LogScreen = (props) => {
 
   return (
     <View style={styles.container}>
+      <BackButton target="Main" />
       {display.dates.map((date) => {
         let viewDate = (
           <View>
@@ -96,7 +98,6 @@ const LogScreen = (props) => {
         );
         return viewDate;
       })}
-      <ButtonLink text="close" />
     </View>
   );
 };

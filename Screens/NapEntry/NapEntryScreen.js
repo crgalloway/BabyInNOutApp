@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import ButtonLink from "../../components/ButtonLink";
+import BackButton from "../../components/BackButton";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../../Base.StyleSheet";
 import moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-var newNapEvent = {
+var newEvent = {
   startTime: null,
   endTime: null,
   comment: null,
@@ -36,7 +36,7 @@ const NapEntryScreen = (props) => {
   };
 
   const handleStartConfirm = (date) => {
-    newNapEvent.startTime = moment(date);
+    newEvent.startTime = moment(date);
     hideStartDatePicker();
   };
 
@@ -50,7 +50,7 @@ const NapEntryScreen = (props) => {
   };
 
   const handleEndConfirm = (date) => {
-    newNapEvent.endTime = moment(date);
+    newEvent.endTime = moment(date);
     hideEndDatePicker();
   };
 
@@ -62,7 +62,7 @@ const NapEntryScreen = (props) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(eventData),
       }).then((data) => {
-        newNapEvent = {
+        newEvent = {
           startTime: null,
           endTime: null,
           comment: null,
@@ -77,10 +77,11 @@ const NapEntryScreen = (props) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
+        <BackButton target="NewEntryMenu" />
         <Text>Baby was put down at or around:</Text>
         <Text>
           {newNapEvent.startTime
-            ? newNapEvent.startTime.format("M/DD h:mm a").toString()
+            ? newEvent.startTime.format("M/DD h:mm a").toString()
             : "?"}
         </Text>
         <Button title="Edit Start Time" onPress={showStartDatePicker} />
@@ -94,7 +95,7 @@ const NapEntryScreen = (props) => {
         <Text>Baby got up at or around:</Text>
         <Text>
           {newNapEvent.endTime
-            ? newNapEvent.endTime.format("M/DD h:mm a").toString()
+            ? newEvent.endTime.format("M/DD h:mm a").toString()
             : "?"}
         </Text>
         <Button title="Edit End Time" onPress={showEndDatePicker} />
@@ -110,7 +111,7 @@ const NapEntryScreen = (props) => {
           style={styles.TextInputStyle}
           keyboardType={"default"}
           onChangeText={(value) => {
-            newNapEvent.comment = value;
+            newEvent.comment = value;
           }}
         />
         <TouchableOpacity
@@ -120,7 +121,6 @@ const NapEntryScreen = (props) => {
         >
           <Text>Submit</Text>
         </TouchableOpacity>
-        <ButtonLink text="Nothing yet" />
       </View>
     </TouchableWithoutFeedback>
   );

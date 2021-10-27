@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import ButtonLink from "../../components/ButtonLink";
+import BackButton from "../../components/BackButton";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../../Base.StyleSheet";
 import moment from "moment";
@@ -60,6 +60,7 @@ const DiaperEntryScreen = (props) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
+        <BackButton target="NewEntryMenu" />
         <Text>Diaper was changed at or around:</Text>
         <Text>{newEvent.time.format("M/DD h:mm a").toString()}</Text>
         <Button title="Edit Time" onPress={showDatePicker} />
@@ -136,7 +137,6 @@ const DiaperEntryScreen = (props) => {
         >
           <Text>Submit</Text>
         </TouchableOpacity>
-        <ButtonLink text="Nothing yet" />
       </View>
     </TouchableWithoutFeedback>
   );
