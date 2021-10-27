@@ -15,7 +15,7 @@ import moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 var newEvent = {
-  time: moment(),
+  time: null,
 };
 
 const DiaperEntryScreen = (props) => {
@@ -23,6 +23,7 @@ const DiaperEntryScreen = (props) => {
   const [urineAmount, setUrineAmount] = useState();
   const [stoolAmount, setStoolAmount] = useState();
   const navigate = useNavigation().navigate;
+  newEvent.time = moment();
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);

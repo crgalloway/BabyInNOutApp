@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   TextInput,
@@ -16,7 +16,7 @@ import RadioForm from "react-native-simple-radio-button";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 var newFeedEvent = {
-  time: moment(),
+  time: null,
   quantity: 0,
   type: "formula",
   comment: "",
@@ -25,6 +25,7 @@ var newFeedEvent = {
 const FeedEntryScreen = (props) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const navigate = useNavigation().navigate;
+  newFeedEvent.time = moment();
 
   var radio_props = [
     { label: "Formula", value: "Formula" },
